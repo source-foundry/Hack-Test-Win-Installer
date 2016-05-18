@@ -29,12 +29,13 @@ build_script:
   
 artifacts:
   - path: 'out\*.exe'
+    name: SetupExe
   
 deploy:
   provider: GitHub
   auth_token:
     secure: 6Ez1BkZ4iDyoY17CZAwbOcQJcKnn8ZWK3vV2QINglWqgkOFRkN4JCtdMu0fyBFMc
-  artifact: 'out\*.exe'
+  artifact: SetupExe
   prerelease: true
   tag: v$(appveyor_build_version)
   release: Version $(appveyor_build_version)
