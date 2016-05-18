@@ -3,6 +3,9 @@
 
 version: 1.0.{build}
 
+# Do not run when just a tag is pushed (which we do by adding a release)
+skip_tags: true
+
 branches:
   except:
     - gh-pages
