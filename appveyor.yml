@@ -1,0 +1,15 @@
+# Appveyor build script
+
+version: 1.0.{build}-{branch}
+
+branches:
+  except:
+    - gh-pages
+	
+
+environment:
+  WORK_PATH: .
+  TEST_PATH: C:\Libs\test
+  
+  
+install:
