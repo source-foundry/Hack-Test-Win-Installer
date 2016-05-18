@@ -13,8 +13,11 @@ environment:
   
 install:
   # Download and install InnoSetup
-  - ps: (new-object net.webclient).DownloadFile('http://www.jrsoftware.org/download.php/is.exe?site=1 ', 'innosetup-setup.exe')
-  - start /wait innosetup-setup.exe TYPE=full /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /CLOSEAPPLICATIONS /NORESTARTAPPLICATIONS
+  - ps: (new-object net.webclient).DownloadFile('http://www.jrsoftware.org/download.php/is.exe?site=1', 'innosetup-setup.exe')
+  - dir
+  # Starting installation
+  - innosetup-setup.exe TYPE=full /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /CLOSEAPPLICATIONS /NORESTARTAPPLICATIONS
+  # Done 
 
 build_script:
   - iscc src/HackTestWinInstaller.iss
