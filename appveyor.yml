@@ -24,14 +24,24 @@ build_script:
   - iscc src/HackTestWinInstaller.iss
   - dir
   
+artifacts:
+  - path: 'out\*.exe'
+  
 deploy:
   provider: GitHub
   auth_token:
     secure: 6Ez1BkZ4iDyoY17CZAwbOcQJcKnn8ZWK3vV2QINglWqgkOFRkN4JCtdMu0fyBFMc
-  artifact: out\*.exe
+  artifact: 'out\*.exe'
   prerelease: true
   tag: v$(appveyor_build_version)
   release: Version $(appveyor_build_version)
   description: Description for Release $(appveyor_build_version)
+
+  
+notifications:
+  - provider: Slack
+    auth_token:
+      secure: ElggvPLQdlcU9+djZsLDZpZLjOOpYg5Y2DRFQGN2yuSrZqoOP/1PCAmUSd8RJjrukymK1FQNrKuSpiw0hLHEeg==
+    channel: '#release-info'
   
 #done
