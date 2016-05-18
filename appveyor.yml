@@ -1,7 +1,7 @@
 # Appveyor build script
 # List of installed tools/SDKs etc.: https://www.appveyor.com/docs/installed-software
 
-version: 1.0.{build}-{branch}
+version: 1.0.{build}
 
 branches:
   except:
@@ -23,4 +23,16 @@ install:
 build_script:
   - iscc src/HackTestWinInstaller.iss
   - dir
+  
+deploy:
+  - provider: GitHub    
+	artifact: out\*.exe
+    prerelease: true
+	tag: v$(appveyor_build_version)
+	release: Version $(appveyor_build_version)
+	description: Description for Release $(appveyor_build_version)
+	auth_token:
+	  secure: 6Ez1BkZ4iDyoY17CZAwbOcQJcKnn8ZWK3vV2QINglWqgkOFRkN4JCtdMu0fyBFMc
+	
+
  
