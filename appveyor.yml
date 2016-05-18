@@ -1,4 +1,5 @@
 # Appveyor build script
+# List of installed tools/SDKs etc.: https://www.appveyor.com/docs/installed-software
 
 version: 1.0.{build}-{branch}
 
@@ -13,12 +14,11 @@ environment:
   
 install:
   - md C:\temp
-  # Download and install InnoSetup
+  # Download and install InnoSetup (newest version from US site)
   - ps: (new-object net.webclient).DownloadFile('http://www.jrsoftware.org/download.php/is.exe?site=1', 'c:\temp\innosetup.exe')
-  - dir C:\temp
-  # Starting installation
   - c:\temp\innosetup.exe TYPE=full /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /CLOSEAPPLICATIONS /NORESTARTAPPLICATIONS
-  # Done 
+  # Add Inno Setup to PATH
+  set PATH="C:\Program Files (x86)\Inno Setup 5";%PATH%
 
 build_script:
   - iscc src/HackTestWinInstaller.iss
