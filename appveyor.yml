@@ -5,11 +5,18 @@ version: 1.0.{build}-{branch}
 branches:
   except:
     - gh-pages
-	
 
 environment:
   WORK_PATH: .
   TEST_PATH: C:\Libs\test
-  
+
   
 install:
+  # Download and install InnoSetup
+  - ps: (new-object net.webclient).DownloadFile('http://www.jrsoftware.org/download.php/is.exe?site=1 ', 'innosetup-setup.exe')
+  - start /wait innosetup-setup.exe TYPE=full /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /CLOSEAPPLICATIONS /NORESTARTAPPLICATIONS
+
+build_script:
+  - iscc src/HackTestWinInstaller.iss
+  - dir
+ 
