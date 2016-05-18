@@ -3,7 +3,7 @@
 
 version: 1.0.{build}
 
-# Do not run when just a tag is pushed (which we do by adding a release)
+# Do not run when just a tag is pushed (which we do automatically by adding a release)
 skip_tags: true
 
 branches:
@@ -38,7 +38,7 @@ deploy:
   prerelease: true
   tag: v$(appveyor_build_version)
   release: Version $(appveyor_build_version)
-  description: Description for Release $(appveyor_build_version)
+  description: $(APPVEYOR_REPO_COMMIT_MESSAGE) ($(APPVEYOR_REPO_COMMIT_TIMESTAMP))
 
   
 notifications:
