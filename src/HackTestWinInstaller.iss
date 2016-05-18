@@ -12,10 +12,14 @@
 #pragma option -v+
 #pragma verboselevel 9
 
+//Use BuildID from AppVeyor or 0.0.1 if this is not defined
+#define public Version '0.0.1'
+
+#ifdef AppVeyorBuild
+#define public Version AppVeyorBuild
+#endif 
 
 
-//Update this when releasing a new version
-#define public Version '1.2.1'
 
 //This defines in which sub folder of this project the current files are located
 #define public HackMonospaced_Sourcefolder 'Hack_v2_020'

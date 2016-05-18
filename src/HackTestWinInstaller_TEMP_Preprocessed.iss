@@ -18,6 +18,7 @@
 
 
 
+
 ; ISPP: Base Path C:\dev\git\Hack-Test-Win-Installer\
 
 
@@ -57,8 +58,8 @@ AppId=HackWindowsInstaller
 SetupMutex=HackWindowsInstaller_SetupMutex 
 
 AppName=Test Hack Typeface Windows Installer
-AppVersion=1.2.1
-VersionInfoVersion=1.2.1
+AppVersion=0.0.1
+VersionInfoVersion=0.0.1
 
 AppPublisher=Michael Hex / Source Foundry
 AppContact=Michael Hex / Source Foundry
@@ -110,7 +111,7 @@ AllowCancelDuringInstall=False
 ;SetupAppTitle is displayed in the taskbar
 SetupAppTitle=Test Hack Typeface Windows Installer
 ;SetupWindowsTitle is displayed in the setup window itself so better include the version
-SetupWindowTitle=Test Hack Typeface Windows Installer 1.2.1
+SetupWindowTitle=Test Hack Typeface Windows Installer 0.0.1
 
 ;Message for the "Read to install" wizard page
   ;NOT USED - "Ready To Install" - below title bar
