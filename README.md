@@ -3,12 +3,12 @@
 A Windows installer for test/developments builds of the Hack typeface.
 
 <hr>
-**This tool is used to install special test/development versions of the [Hack](https://github.com/chrissimpkins/Hack) typeface.**
+### This tool is used to install special test/development versions of the [Hack](https://github.com/chrissimpkins/Hack) typeface.
 
-**It should only be executed when instructed to do so. This is not the installer you are looking for.**
+### It should only be executed when instructed to do so. This is not the installer you are looking for.
 <hr>
 
-### The Windows installer for the release (stable) version of Hack typeface is [Hack Windows Installer](https://github.com/source-foundry/Hack-windows-installer).  
+**The Windows installer for the release (stable) version of Hack typeface is [Hack Windows Installer](https://github.com/source-foundry/Hack-windows-installer).**  
 
 
 ## License
