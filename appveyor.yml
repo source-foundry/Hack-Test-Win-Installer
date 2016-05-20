@@ -24,7 +24,7 @@ install:
   - set PATH="C:\Program Files (x86)\Inno Setup 5";%PATH%
 
 build_script:
-  - iscc.exe /DEXTERNAL_VERSION=%APPVEYOR_BUILD_VERSION% src/HackWinInstaller.iss
+  - iscc.exe /DEXTERNAL_VERSION=%APPVEYOR_BUILD_VERSION% src/HackWindowsInstaller.iss
   - dir
 
   
