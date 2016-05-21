@@ -23,7 +23,7 @@ install:
   # Add Inno Setup to PATH so the ISCC command is found
   - set PATH="C:\Program Files (x86)\Inno Setup 5";%PATH%
   # Download newest version of the font files
-  - ps: (new-object net.webclient).DownloadFile('https://github.com/chrissimpkins/Hack/raw/master/build/test_builds/Hack-Bold-DEV.ttf', '%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Bold-DEV.ttf')
+  - ps: (new-object net.webclient).DownloadFile('https://github.com/chrissimpkins/Hack/raw/master/build/test_builds/Hack-Bold-DEV.ttf', '$env:APPVEYOR_BUILD_FOLDER\testfonts\Hack-Bold-DEV.ttf')
   - dir %APPVEYOR_BUILD_FOLDER%
   - dir %APPVEYOR_BUILD_FOLDER%\testfonts
     
