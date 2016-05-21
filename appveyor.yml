@@ -12,7 +12,7 @@ branches:
 
 environment:
   WORK_PATH: .
-  TEST_PATH: C:\Libs\test
+  TEST_FONTS_BASE_URL: https://github.com/chrissimpkins/Hack/raw/master/build/test_builds
 
   
 install:
@@ -31,12 +31,15 @@ install:
   #     O - Use external file name
   - cd %APPVEYOR_BUILD_FOLDER%\testfonts
   - dir
-  - curl -kLO https://github.com/chrissimpkins/Hack/raw/master/build/test_builds/Hack-Bold-DEV.ttf
+  - curl -kLO %TEST_FONTS_BASE_URL%/Hack-Bold-DEV.ttf
+  - curl -kLO %TEST_FONTS_BASE_URL%/Hack-BoldItalic-DEV.ttf
+  - curl -kLO %TEST_FONTS_BASE_URL%/Hack-Italic-DEV.ttf
+  - curl -kLO %TEST_FONTS_BASE_URL%/Hack-Regular-DEV.ttf
   - dir 
     
 
 build_script:
-  - iscc.exe /DEXTERNAL_VERSION=%APPVEYOR_BUILD_VERSION% src/HackWindowsInstaller.iss
+  - iscc.exe /DEXTERNAL_VERSION=%APPVEYOR_BUILD_VERSION% %APPVEYOR_BUILD_FOLDER%\src\HackWindowsInstaller.iss
   # - dir
 
   
