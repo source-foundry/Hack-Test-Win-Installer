@@ -26,11 +26,12 @@ install:
   - choco install -y curl 
   # Download newest version of the font files
   # Curl options: 
+  #     k - **Disable SSL check** because else the download fails
   #     L - follow redirects 
   #     O - Use external file name
   - cd %APPVEYOR_BUILD_FOLDER%\testfonts
   - dir
-  - curl -LO https://github.com/chrissimpkins/Hack/raw/master/build/test_builds/Hack-Bold-DEV.ttf
+  - curl -kLO https://github.com/chrissimpkins/Hack/raw/master/build/test_builds/Hack-Bold-DEV.ttf
   - dir 
     
 
