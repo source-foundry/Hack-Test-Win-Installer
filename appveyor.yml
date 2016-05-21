@@ -22,10 +22,16 @@ install:
   - c:\temp\innosetup.exe TYPE=full /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /CLOSEAPPLICATIONS /NORESTARTAPPLICATIONS
   # Add Inno Setup to PATH so the ISCC command is found
   - set PATH="C:\Program Files (x86)\Inno Setup 5";%PATH%
+  # Install CURL
+  - choco install -y curl 
   # Download newest version of the font files
-  - ps: (new-object net.webclient).DownloadFile('https://github.com/chrissimpkins/Hack/raw/master/build/test_builds/Hack-Bold-DEV.ttf', '$env:APPVEYOR_BUILD_FOLDER\testfonts\Hack-Bold-DEV.ttf')
-  - dir %APPVEYOR_BUILD_FOLDER%
-  - dir %APPVEYOR_BUILD_FOLDER%\testfonts
+  # Curl options: 
+  #     L - follow redirects 
+  #     O - Use external file name
+  - cd %APPVEYOR_BUILD_FOLDER%\testfonts
+  - dir
+  - curl -LO https://github.com/chrissimpkins/Hack/raw/master/build/test_builds/Hack-Bold-DEV.ttf
+  - dir 
     
 
 build_script:
