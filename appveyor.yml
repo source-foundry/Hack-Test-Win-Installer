@@ -16,26 +16,42 @@ environment:
 
   
 install:
+  # We  use CURL from Chocolatey for downloading files. However, curl.exe does not trust 
+  # any CA, hence each SSL download would fail. But there is a PEM archive of all 
+  # root CA allowed by Firefox: https://curl.haxx.se/docs/caextract.html
+  # We will use PowerShell (which is using the Root CAs in Windows) to download this file 
+  # and then instruct CURL to use it.  
+  # I hope this is proper way to ensure that our https connections are secure
+  
   - md C:\temp
-  # Download (newest version from US site) and install Inno Setup
+  
+  # Download CA pem file using PowerShell
+  - ps: (new-object net.webclient).DownloadFile('https://curl.haxx.se/ca/cacert.pem', 'c:\temp\cacert.pem')
+  
+  # Install CURL using Chocolatey (https://chocolatey.org/packages/curl)
+  - choco install -y curl       
+  - cd %APPVEYOR_BUILD_FOLDER%\testfonts
+  # To be sure, delete all old -DEV.ttf files
+  - del *-DEV.ttf /Q   
+  - dir
+  # Download newest version of the font files.
+  # Use our PEM file, follow redirect and use the remote name as the local filename
+  - curl.exe --cacert C:\temp\cacert.pem --location --remote-name %TEST_FONTS_BASE_URL%/Hack-Regular-DEV.ttf
+  - curl.exe --cacert C:\temp\cacert.pem --location --remote-name %TEST_FONTS_BASE_URL%/Hack-Italic-DEV.ttf
+  - curl.exe --cacert C:\temp\cacert.pem --location --remote-name %TEST_FONTS_BASE_URL%/Hack-Bold-DEV.ttf
+  - curl.exe --cacert C:\temp\cacert.pem --location --remote-name %TEST_FONTS_BASE_URL%/Hack-BoldItalic-DEV.ttf   
+  #- curl -kLO %TEST_FONTS_BASE_URL%/Hack-Bold-DEV.ttf
+  #- curl -kLO %TEST_FONTS_BASE_URL%/Hack-BoldItalic-DEV.ttf
+  #  - curl -kLO %TEST_FONTS_BASE_URL%/Hack-Italic-DEV.ttf
+  #- curl -kLO %TEST_FONTS_BASE_URL%/Hack-Regular-DEV.ttf
+  - dir 
+    
+  # Download (newest version from US site) and install Inno Setup. Again usign powershell to set use Windows root CAs
   - ps: (new-object net.webclient).DownloadFile('http://www.jrsoftware.org/download.php/is.exe?site=1', 'c:\temp\innosetup.exe')
   - c:\temp\innosetup.exe TYPE=full /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /CLOSEAPPLICATIONS /NORESTARTAPPLICATIONS
   # Add Inno Setup to PATH so the ISCC command is found
   - set PATH="C:\Program Files (x86)\Inno Setup 5";%PATH%
-  # Install CURL
-  - choco install -y curl 
-  # Download newest version of the font files
-  # Curl options: 
-  #     k - **Disable SSL check** because else the download fails
-  #     L - follow redirects 
-  #     O - Use external file name
-  - cd %APPVEYOR_BUILD_FOLDER%\testfonts
-  - dir
-  - curl -kLO %TEST_FONTS_BASE_URL%/Hack-Bold-DEV.ttf
-  - curl -kLO %TEST_FONTS_BASE_URL%/Hack-BoldItalic-DEV.ttf
-  - curl -kLO %TEST_FONTS_BASE_URL%/Hack-Italic-DEV.ttf
-  - curl -kLO %TEST_FONTS_BASE_URL%/Hack-Regular-DEV.ttf
-  - dir 
+
     
 
 build_script:
