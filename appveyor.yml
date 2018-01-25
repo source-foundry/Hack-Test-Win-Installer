@@ -1,7 +1,7 @@
 # Appveyor build script
 # List of installed tools/SDKs etc.: https://www.appveyor.com/docs/installed-software
 
-version: 1.1.{build}
+version: 0.9.{build}
 
 # Do not run when just a tag is pushed (which we do automatically by adding a release)
 skip_tags: true
@@ -12,6 +12,7 @@ branches:
 
 environment:
   WORK_PATH: .
+  INNOSETUP_DOWNLOAD_URL: https://github.com/source-foundry/fscw/releases/download/v0.0.1/innosetup.exe
   TEST_FONTS_BASE_URL: https://github.com/chrissimpkins/Hack/raw/master/build/test_builds
 
   
@@ -35,15 +36,15 @@ install:
   
   # Download newest version of the font files.
   # CURL Options: use our PEM file, follow redirect and use the remote name as the local filename
-  - curl.exe --cacert C:\temp\cacert.pem --location --remote-name %TEST_FONTS_BASE_URL%/Hack-Regular-DEV.ttf
-  - curl.exe --cacert C:\temp\cacert.pem --location --remote-name %TEST_FONTS_BASE_URL%/Hack-Italic-DEV.ttf
-  - curl.exe --cacert C:\temp\cacert.pem --location --remote-name %TEST_FONTS_BASE_URL%/Hack-Bold-DEV.ttf
-  - curl.exe --cacert C:\temp\cacert.pem --location --remote-name %TEST_FONTS_BASE_URL%/Hack-BoldItalic-DEV.ttf   
-  - dir 
+  #- curl.exe --cacert C:\temp\cacert.pem --location --remote-name %TEST_FONTS_BASE_URL%/Hack-Regular-DEV.ttf
+  #- curl.exe --cacert C:\temp\cacert.pem --location --remote-name %TEST_FONTS_BASE_URL%/Hack-Italic-DEV.ttf
+  #- curl.exe --cacert C:\temp\cacert.pem --location --remote-name %TEST_FONTS_BASE_URL%/Hack-Bold-DEV.ttf
+  #- curl.exe --cacert C:\temp\cacert.pem --location --remote-name %TEST_FONTS_BASE_URL%/Hack-BoldItalic-DEV.ttf   
+  #- dir 
     
-  # Download (newest version from US site) and install Inno Setup. 
-  # We are using PowerShell to verify the connection by using the Windows root CAs
-  - ps: (new-object net.webclient).DownloadFile('http://www.jrsoftware.org/download.php/is.exe?site=1', 'c:\temp\innosetup.exe')
+  # Download and install Inno Setup. 
+  - ps: $env:INNOSETUP_DOWNLOAD_URL
+  - ps: (new-object net.webclient).DownloadFile($env:INNOSETUP_DOWNLOAD_URL, 'c:\temp\innosetup.exe')
   - c:\temp\innosetup.exe TYPE=full /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /CLOSEAPPLICATIONS /NORESTARTAPPLICATIONS
   # Add Inno Setup to PATH so the ISCC command is found
   - set PATH="C:\Program Files (x86)\Inno Setup 5";%PATH%
@@ -51,8 +52,7 @@ install:
     
 
 build_script:
-  - iscc.exe /DEXTERNAL_VERSION=%APPVEYOR_BUILD_VERSION% %APPVEYOR_BUILD_FOLDER%\src\HackWindowsInstaller.iss
-  # - dir
+  - iscc.exe /DEXTERNAL_VERSION=%APPVEYOR_BUILD_VERSION% %APPVEYOR_BUILD_FOLDER%\src\HackTestWindowsInstaller.iss
 
   
 artifacts:
