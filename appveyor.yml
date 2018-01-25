@@ -67,7 +67,7 @@ deploy:
   prerelease: true
   tag: v$(appveyor_build_version)
   release: Version $(appveyor_build_version)
-  description: $(APPVEYOR_REPO_COMMIT_MESSAGE) ($(APPVEYOR_REPO_COMMIT_TIMESTAMP))
+  description: Build on $(APPVEYOR_REPO_COMMIT_TIMESTAMP):\n $(APPVEYOR_REPO_COMMIT_MESSAGE) 
 
   
 notifications:
