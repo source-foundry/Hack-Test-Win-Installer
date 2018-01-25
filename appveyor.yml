@@ -1,7 +1,7 @@
 # Appveyor build script
 # List of installed tools/SDKs etc.: https://www.appveyor.com/docs/installed-software
 
-version: 0.9.{build}
+version: 1.2.{build}
 
 # Do not run when just a tag is pushed (which we do automatically by adding a release)
 skip_tags: true
@@ -62,7 +62,7 @@ artifacts:
 deploy:
   provider: GitHub
   auth_token:
-    secure: 6Ez1BkZ4iDyoY17CZAwbOcQJcKnn8ZWK3vV2QINglWqgkOFRkN4JCtdMu0fyBFMc
+    secure: JYo6W23N4HyYjKTXyHQehE6t3H61fUMidx59lXKr7984cRiqMOgc0GJOoxwa/3Jd
   artifact: SetupExe
   prerelease: true
   tag: v$(appveyor_build_version)
