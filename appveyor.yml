@@ -56,7 +56,7 @@ install:
 build_script:
   - iscc.exe /DEXTERNAL_VERSION=%APPVEYOR_BUILD_VERSION% %APPVEYOR_BUILD_FOLDER%\src\HackTestWindowsInstaller.iss
   #Upload the exe to VirusTotal with CURL
-  - curl.exe --cacert C:\temp\cacert.pem --verbose --form 'file=@%APPVEYOR_BUILD_FOLDER%\out\HackTestWinInstaller.exe' --form apikey=%VIRUS_TOTAL_API_KEY% https://www.virustotal.com/vtapi/v2/file/scan
+  - curl.exe --cacert C:\temp\cacert.pem --verbose --form file=@%APPVEYOR_BUILD_FOLDER%\out\HackTestWinInstaller.exe --form apikey=%VIRUS_TOTAL_API_KEY% https://www.virustotal.com/vtapi/v2/file/scan
   
   
 artifacts:
