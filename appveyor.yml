@@ -14,12 +14,15 @@ environment:
   WORK_PATH: .
   INNOSETUP_DOWNLOAD_URL: https://github.com/source-foundry/fscw/releases/download/v0.0.1/innosetup.exe
   TEST_FONTS_BASE_URL: https://github.com/chrissimpkins/Hack/raw/master/build/test_builds
+  VIRUS_TOTAL_API_KEY:
+    secure: EwkMKJe3x5/3codga0EyEEhoqzSsqvtDQwQbrGoXTY/S8ZcHCOaLYpHYTmMYKjWEudUwDBER0RsltoJjwb7yU7cBHjRdS1ClNSlDyCx7Gfw=
 
   
 install:
-  # We  use CURL from Chocolatey for downloading files. However, curl.exe does not trust 
+  # We  use CURL from Chocolatey for some actions. However, curl.exe does not trust 
   # any CA, hence each SSL download would fail. But there is a PEM archive of all 
   # root CA allowed by Firefox: https://curl.haxx.se/docs/caextract.html
+  #
   # We will use PowerShell (which is using the Root CAs in Windows) to download this file 
   # and then instruct CURL to use it.  
   # I hope this is proper way to ensure that our https connections are really secure  
@@ -48,12 +51,13 @@ install:
   - c:\temp\innosetup.exe TYPE=full /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /CLOSEAPPLICATIONS /NORESTARTAPPLICATIONS
   # Add Inno Setup to PATH so the ISCC command is found
   - set PATH="C:\Program Files (x86)\Inno Setup 5";%PATH%
-
     
 
 build_script:
   - iscc.exe /DEXTERNAL_VERSION=%APPVEYOR_BUILD_VERSION% %APPVEYOR_BUILD_FOLDER%\src\HackTestWindowsInstaller.iss
-
+  #Upload the exe to VirusTotal with CURL
+  - curl.exe --cacert C:\temp\cacert.pem --verbose --form 'file=@%APPVEYOR_BUILD_FOLDER%\out\HackTestWinInstaller.exe' --form apikey=%VIRUS_TOTAL_API_KEY% https://www.virustotal.com/vtapi/v2/file/scan
+  
   
 artifacts:
   - path: 'out\*.exe'
