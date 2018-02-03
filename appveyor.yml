@@ -36,8 +36,11 @@ install:
   - copy "%APPVEYOR_BUILD_FOLDER%\fonts\Hack-Regular.ttf" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Regular.ttf"
     
   # The script requires fonttools
-  - appveyor AddMessage "Test message 123"
-  - C:\Python36-x64\pip install fonttools
+  - C:\Python36-x64\scripts\pip install fonttools
+  #Add-AppveyorMessage "This is a test message"
+  # - appveyor AddMessage "Test message 123"
+  # Set-AppveyorBuildVariable 'MyVar1' 'This is a test message'
+  # appveyor SetVariable -Name <string> -Value <string>
   
   # Use fontname.py to rename the font family to "Hack Test"
   - C:\Python36-x64\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Bold.ttf" 
