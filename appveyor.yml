@@ -40,7 +40,7 @@ install:
   - copy "%APPVEYOR_BUILD_FOLDER%\fonts\Hack-Regular.ttf" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Regular.ttf"
     
   # The script requires fonttools
-  - C:\Python36-x64\python\scripts\pip install fonttools
+  - C:\Python36-x64\scripts\pip install fonttools
   
   # Use fontname.py to rename the font family to "Hack Test"
   - C:\Python36-x64\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Bold.ttf" 
