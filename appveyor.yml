@@ -15,8 +15,6 @@ environment:
   INNOSETUP_DOWNLOAD_URL: https://github.com/source-foundry/fscw/releases/download/v0.0.1/innosetup.exe
   VIRUS_TOTAL_API_KEY:
     secure: EwkMKJe3x5/3codga0EyEEhoqzSsqvtDQwQbrGoXTY/S8ZcHCOaLYpHYTmMYKjWEudUwDBER0RsltoJjwb7yU7cBHjRdS1ClNSlDyCx7Gfw=
-  FONT_SOURCE_FOLDER: %APPVEYOR_BUILD_FOLDER%\fonts
-  FONT_DEST_FOLDER: %APPVEYOR_BUILD_FOLDER%\testfonts
   # Not used right now
   #TEST_FONTS_BASE_URL: https://github.com/chrissimpkins/Hack/raw/master/build/test_builds
 
@@ -27,14 +25,14 @@ install:
   # To solve this, new test fonts are pused to the "\fonts" folder and we rename them (family and file) to "Test"
   
   # Delete any old testfonts
-  - cd %FONT_DEST_FOLDER%\
+  - cd %APPVEYOR_BUILD_FOLDER%\testfonts\
   - del *.* /Q   
   
   # Copy the fonts from \fonts here
-  - copy "%FONT_SOURCE_FOLDER%\Hack-Bold.ttf" "%FONT_DEST_FOLDER%\Hack-Test-Bold.ttf"
-  - copy "%FONT_SOURCE_FOLDER%\Hack-BoldItalic.ttf" "%FONT_DEST_FOLDER%\Hack-Test-BoldItalic.ttf"
-  - copy "%FONT_SOURCE_FOLDER%\Hack-Italic.ttf" "%FONT_DEST_FOLDER%\Hack-Test-Italic.ttf"
-  - copy "%FONT_SOURCE_FOLDER%\Hack-Regular.ttf" "%FONT_DEST_FOLDER%\Hack-Test-Regular.ttf"
+  - copy "%APPVEYOR_BUILD_FOLDER%\fonts\Hack-Bold.ttf" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Bold.ttf"
+  - copy "%APPVEYOR_BUILD_FOLDER%\fonts\Hack-BoldItalic.ttf" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-BoldItalic.ttf"
+  - copy "%APPVEYOR_BUILD_FOLDER%\fonts\Hack-Italic.ttf" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Italic.ttf"
+  - copy "%APPVEYOR_BUILD_FOLDER%\fonts\Hack-Regular.ttf" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Regular.ttf"
   
   #Hack-Regular
   #- dir
