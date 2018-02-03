@@ -15,6 +15,7 @@ environment:
   INNOSETUP_DOWNLOAD_URL: https://github.com/source-foundry/fscw/releases/download/v0.0.1/innosetup.exe
   VIRUS_TOTAL_API_KEY:
     secure: EwkMKJe3x5/3codga0EyEEhoqzSsqvtDQwQbrGoXTY/S8ZcHCOaLYpHYTmMYKjWEudUwDBER0RsltoJjwb7yU7cBHjRdS1ClNSlDyCx7Gfw=
+  PYTHON_PATH: C:\Python36-x64\
   # Not used right now
   #TEST_FONTS_BASE_URL: https://github.com/chrissimpkins/Hack/raw/master/build/test_builds
 
@@ -35,13 +36,13 @@ install:
   - copy "%APPVEYOR_BUILD_FOLDER%\fonts\Hack-Regular.ttf" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Regular.ttf"
     
   # The script requires fonttools
-  - pip install fonttools
+  - "%PYTHON_PATH%"\pip install fonttools
   
   # Use fontname.py to rename the font family to "Hack Test"
-  - python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Bold.ttf" 
-  - python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-BoldItalic.ttf" 
-  - python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Italic.ttf"
-  - python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Regular.ttf"
+  - "%PYTHON_PATH%"\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Bold.ttf" 
+  - "%PYTHON_PATH%"\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-BoldItalic.ttf" 
+  - "%PYTHON_PATH%"\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Italic.ttf"
+  - "%PYTHON_PATH%"\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Regular.ttf"
     
   
   # We  use CURL from Chocolatey for some actions. However, curl.exe does not trust 
