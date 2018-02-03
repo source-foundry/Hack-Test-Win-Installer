@@ -49,15 +49,17 @@ install:
   - C:\Python36-x64\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "Hack Test" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Regular.ttf"
     
   
-  # We  use CURL from Chocolatey for some actions. However, curl.exe does not trust 
-  # any CA, hence each SSL download would fail. But there is a PEM archive of all 
-  # root CA allowed by Firefox: https://curl.haxx.se/docs/caextract.html
+  # We use CURL (from Chocolatey), but curl.exe does not trust any CA, 
+  # hence any SSL connection would fail. 
   #
-  # We will use PowerShell (which is using the Root CAs in Windows) to download 
-  # this CACert.pem file and then instruct CURL to use it.
+  # But there is a PEM archive of all root CA allowed by Firefox: 
+  #   https://curl.haxx.se/docs/caextract.html
+  #
+  # We will use PowerShell (which is using the Root CAs in Windows) to 
+  # download his CACert.pem file and then instruct CURL to use it.
   #
   # I hope this is proper way to ensure that our https connections are really secure  
-
+ 
   - md C:\temp      	
   # Download CA pem file using PowerShell
   - ps: (new-object net.webclient).DownloadFile('https://curl.haxx.se/ca/cacert.pem', 'c:\temp\cacert.pem')  
@@ -85,10 +87,14 @@ build_script:
   - iscc.exe /DEXTERNAL_VERSION=%APPVEYOR_BUILD_VERSION% %APPVEYOR_BUILD_FOLDER%\src\HackTestWindowsInstaller.iss
   # Upload the exe to VirusTotal with CURL
   - curl.exe --cacert C:\temp\cacert.pem --verbose --form file=@%APPVEYOR_BUILD_FOLDER%\out\HackTestFontsInstaller.exe --form apikey=%VIRUS_TOTAL_API_KEY% https://www.virustotal.com/vtapi/v2/file/scan
+  # Get Hash values so we can use it later on for the GitHub release
   - ps: Set-AppveyorBuildVariable 'SetupExeHash128' ( (Get-FileHash -Path "$env:APPVEYOR_BUILD_FOLDER\out\HackTestFontsInstaller.exe" -Algorithm SHA1).Hash.ToLower() )
   - ps: Set-AppveyorBuildVariable 'SetupExeHash256' ( (Get-FileHash -Path "$env:APPVEYOR_BUILD_FOLDER\out\HackTestFontsInstaller.exe" -Algorithm SHA256).Hash.ToLower() )
-  - cmd: echo File SHA128 hash %SetupExeHash128%
-  - cmd: echo File SHA256 hash %SetupExeHash256%
+  # Output hash
+  - ps: Add-AppveyorMessage "File SHA1 hash is $env:SetupExeHash128"
+  - ps: Add-AppveyorMessage "File SHA2 hash is $env:SetupExeHash256"
+  #- cmd: echo File SHA128 hash %SetupExeHash128%
+  #- cmd: echo File SHA256 hash %SetupExeHash256%
   
   
 artifacts:
