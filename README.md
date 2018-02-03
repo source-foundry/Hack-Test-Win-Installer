@@ -2,7 +2,7 @@
 
 A Windows installer for test (Development/Beta) builds of the [Hack](https://github.com/source-foundry/Hack/) typeface.
 
-The test fonts are named "Test" ("Hack Test") and use different font file names as the [stable/tested release](https://github.com/source-foundry/Hack-windows-installer). **It is therefore safe to install both versions on the same device** and help us improving Hack.
+The test fonts use both a different family name ("Hack Test") and other file names then the [stable/tested release](https://github.com/source-foundry/Hack-windows-installer) version. **It is therefore safe to install both versions on the same device**.
 
 If you find any display issue with *Hack Test*, please open an issue at the [Hack repository](https://github.com/source-foundry/Hack/).
 
