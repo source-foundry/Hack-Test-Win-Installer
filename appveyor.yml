@@ -28,17 +28,22 @@ install:
   - cd %APPVEYOR_BUILD_FOLDER%\testfonts\
   - del *.* /Q   
   
-  # Copy the fonts from \fonts here
+  # Copy the fonts from \fonts here and rename them to "Test"
   - copy "%APPVEYOR_BUILD_FOLDER%\fonts\Hack-Bold.ttf" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Bold.ttf"
   - copy "%APPVEYOR_BUILD_FOLDER%\fonts\Hack-BoldItalic.ttf" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-BoldItalic.ttf"
   - copy "%APPVEYOR_BUILD_FOLDER%\fonts\Hack-Italic.ttf" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Italic.ttf"
   - copy "%APPVEYOR_BUILD_FOLDER%\fonts\Hack-Regular.ttf" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Regular.ttf"
+    
+  # The script requires fonttools
+  - pip install fonttools
   
-  #Hack-Regular
-  #- dir
+  # Use fontname.py to rename the font family to "Hack Test"
+  - python fontname.py "Hack Test" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Bold.ttf" 
+  - python fontname.py "Hack Test" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-BoldItalic.ttf" 
+  - python fontname.py "Hack Test" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Italic.ttf"
+  - python fontname.py "Hack Test" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Regular.ttf"
     
   
-  - md C:\temp      
   # We  use CURL from Chocolatey for some actions. However, curl.exe does not trust 
   # any CA, hence each SSL download would fail. But there is a PEM archive of all 
   # root CA allowed by Firefox: https://curl.haxx.se/docs/caextract.html
@@ -48,6 +53,8 @@ install:
   #
   # I hope this is proper way to ensure that our https connections are really secure  
   
+  - md C:\temp      
+	
   # Download CA pem file using PowerShell
   - ps: (new-object net.webclient).DownloadFile('https://curl.haxx.se/ca/cacert.pem', 'c:\temp\cacert.pem')  
   # Install CURL using Chocolatey (https://chocolatey.org/packages/curl)
