@@ -92,7 +92,9 @@ build_script:
   - ps: Set-AppveyorBuildVariable 'SetupExeHash256' ( (Get-FileHash -Path "$env:APPVEYOR_BUILD_FOLDER\out\HackTestFontsInstaller.exe" -Algorithm SHA256).Hash.ToLower() )
   # Output hash
   - ps: Add-AppveyorMessage "File SHA1 hash is $env:SetupExeHash128"
+  - ps: write-host $env:SetupExeHash128
   - ps: Add-AppveyorMessage "File SHA2 hash is $env:SetupExeHash256"
+  - ps: write-host $env:SetupExeHash256
   #- cmd: echo File SHA128 hash %SetupExeHash128%
   #- cmd: echo File SHA256 hash %SetupExeHash256%
   
@@ -110,7 +112,7 @@ deploy:
   prerelease: true
   tag: v$(appveyor_build_version)
   release: Version $(appveyor_build_version)
-  description: $(APPVEYOR_REPO_COMMIT_MESSAGE) \n\n```\n   Installer SHA-1 hash $(SetupExeHash128)\n Installer SHA-256 hash $(SetupExeHash256)\n```\n[Scanned with multiple antivirus engines by VirusTotal](https://www.virustotal.com/#/file/$(SetupExeHash256)/detection)
+  description: $(APPVEYOR_REPO_COMMIT_MESSAGE) \n\n```\n   Installer SHA-1 hash: $(SetupExeHash128)\n Installer SHA-256 hash: $(SetupExeHash256)\n```\n[Scanned with multiple antivirus engines by VirusTotal](https://www.virustotal.com/#/file/$(SetupExeHash256)/detection)
   #Build on $(APPVEYOR_REPO_COMMIT_TIMESTAMP):\n 
 
   
