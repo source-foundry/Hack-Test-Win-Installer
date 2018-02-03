@@ -87,8 +87,8 @@ build_script:
   - curl.exe --cacert C:\temp\cacert.pem --verbose --form file=@%APPVEYOR_BUILD_FOLDER%\out\HackTestFontInstaller.exe --form apikey=%VIRUS_TOTAL_API_KEY% https://www.virustotal.com/vtapi/v2/file/scan
   - ps: Set-AppveyorBuildVariable 'SetupExeHash128' ( (Get-FileHash -Path "$env:APPVEYOR_BUILD_FOLDER\out\HackTestFontInstaller.exe" -Algorithm SHA1).Hash.ToLower() )
   - ps: Set-AppveyorBuildVariable 'SetupExeHash256' ( (Get-FileHash -Path "$env:APPVEYOR_BUILD_FOLDER\out\HackTestFontInstaller.exe" -Algorithm SHA256).Hash.ToLower() )
-  - cmd: echo File SHA128 hash: %SetupExeHash128%
-  - cmd: echo File SHA256 hash: %SetupExeHash256%
+  - cmd: echo File SHA128 hash %SetupExeHash128%
+  - cmd: echo File SHA256 hash %SetupExeHash256%
   
   
 artifacts:
