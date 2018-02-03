@@ -15,11 +15,32 @@ environment:
   INNOSETUP_DOWNLOAD_URL: https://github.com/source-foundry/fscw/releases/download/v0.0.1/innosetup.exe
   VIRUS_TOTAL_API_KEY:
     secure: EwkMKJe3x5/3codga0EyEEhoqzSsqvtDQwQbrGoXTY/S8ZcHCOaLYpHYTmMYKjWEudUwDBER0RsltoJjwb7yU7cBHjRdS1ClNSlDyCx7Gfw=
+  FONT_SOURCE_FOLDER: %APPVEYOR_BUILD_FOLDER%\fonts
+  FONT_DEST_FOLDER: %APPVEYOR_BUILD_FOLDER%\testfonts
   # Not used right now
   #TEST_FONTS_BASE_URL: https://github.com/chrissimpkins/Hack/raw/master/build/test_builds
 
   
 install:
+  # Our goal is to have these test fonts side-by-side installed with the release Hack fonts
+  # During development, the Hack fonts are not called other then "Hack" so this would not allow a side-by-side installation
+  # To solve this, new test fonts are pused to the "\fonts" folder and we rename them (family and file) to "Test"
+  
+  # Delete any old testfonts
+  - cd %FONT_DEST_FOLDER%\
+  - del *.* /Q   
+  
+  # Copy the fonts from \fonts here
+  - copy "%FONT_SOURCE_FOLDER%\Hack-Bold.ttf" "%FONT_DEST_FOLDER%\Hack-Test-Bold.ttf"
+  - copy "%FONT_SOURCE_FOLDER%\Hack-BoldItalic.ttf" "%FONT_DEST_FOLDER%\Hack-Test-BoldItalic.ttf"
+  - copy "%FONT_SOURCE_FOLDER%\Hack-Italic.ttf" "%FONT_DEST_FOLDER%\Hack-Test-Italic.ttf"
+  - copy "%FONT_SOURCE_FOLDER%\Hack-Regular.ttf" "%FONT_DEST_FOLDER%\Hack-Test-Regular.ttf"
+  
+  #Hack-Regular
+  #- dir
+    
+  
+  - md C:\temp      
   # We  use CURL from Chocolatey for some actions. However, curl.exe does not trust 
   # any CA, hence each SSL download would fail. But there is a PEM archive of all 
   # root CA allowed by Firefox: https://curl.haxx.se/docs/caextract.html
@@ -28,16 +49,11 @@ install:
   # this CACert.pem file and then instruct CURL to use it.
   #
   # I hope this is proper way to ensure that our https connections are really secure  
-  - md C:\temp  
   
   # Download CA pem file using PowerShell
   - ps: (new-object net.webclient).DownloadFile('https://curl.haxx.se/ca/cacert.pem', 'c:\temp\cacert.pem')  
   # Install CURL using Chocolatey (https://chocolatey.org/packages/curl)
   - choco install -y curl       
-  - cd %APPVEYOR_BUILD_FOLDER%\testfonts
-  # To be sure, delete all old -DEV.ttf files
-  - del *-DEV.ttf /Q   
-  - dir
   
   # Download newest version of the font files - Not used right now because big master (Chris) pushes directly to this repo
   # CURL Options: use our PEM file, follow redirect and use the remote name as the local filename
@@ -75,7 +91,8 @@ deploy:
   prerelease: true
   tag: v$(appveyor_build_version)
   release: Version $(appveyor_build_version)
-  description: Build on $(APPVEYOR_REPO_COMMIT_TIMESTAMP):\n $(APPVEYOR_REPO_COMMIT_MESSAGE) 
+  description: $(APPVEYOR_REPO_COMMIT_MESSAGE) 
+  #Build on $(APPVEYOR_REPO_COMMIT_TIMESTAMP):\n 
 
   
 #notifications:
