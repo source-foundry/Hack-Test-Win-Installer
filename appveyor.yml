@@ -112,7 +112,7 @@ deploy:
   prerelease: true
   tag: v$(appveyor_build_version)
   release: Version $(appveyor_build_version)
-  description: $(APPVEYOR_REPO_COMMIT_MESSAGE) \n\n```\n   Installer SHA-1 hash: $(SetupExeHash128)\n Installer SHA-256 hash: $(SetupExeHash256)\n```\n[Scanned with multiple antivirus engines by VirusTotal](https://www.virustotal.com/#/file/$(SetupExeHash256)/detection)
+  description: $(APPVEYOR_REPO_COMMIT_MESSAGE) \n\n```\n   Installer SHA-1 hash $(SetupExeHash128)\n Installer SHA-256 hash $(SetupExeHash256)\n```\n[Scanned with multiple antivirus engines by VirusTotal](https://www.virustotal.com/#/file/$(SetupExeHash256)/detection)
   #Build on $(APPVEYOR_REPO_COMMIT_TIMESTAMP):\n 
 
   
