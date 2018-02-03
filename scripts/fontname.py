@@ -85,7 +85,7 @@ def main(argv):
         # write changes to the font file
         try:
             tt.save(font_path)
-            print("[✓] Updated '" + font_path + "' with the name '" + nameID4_string + "'")
+            print("[X] Updated '" + font_path + "' with the name '" + nameID4_string + "'")
         except Exception as e:
             sys.stderr.write("[fontname.py] ERROR: unable to write new name to OpenType tables for '" + font_path + "'." + os.linesep)
             sys.stderr.write(unicode(e))
