@@ -40,7 +40,7 @@ install:
   - copy "%APPVEYOR_BUILD_FOLDER%\fonts\Hack-Regular.ttf" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Regular.ttf"
     
   # The script requires fonttools
-  - cmd: %PYTHON_PATH%\scripts\pip install fonttools
+  - C:\Python36-x64\python\scripts\pip install fonttools
   
   # Use fontname.py to rename the font family to "Hack Test"
   - C:\Python36-x64\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Bold.ttf" 
@@ -84,7 +84,7 @@ build_script:
   # Compile with InnoSetup 
   - iscc.exe /DEXTERNAL_VERSION=%APPVEYOR_BUILD_VERSION% %APPVEYOR_BUILD_FOLDER%\src\HackTestWindowsInstaller.iss
   # Upload the exe to VirusTotal with CURL
-  - curl.exe --cacert C:\temp\cacert.pem --verbose --form file=@%APPVEYOR_BUILD_FOLDER%\out\HackTestWinInstaller.exe --form apikey=%VIRUS_TOTAL_API_KEY% https://www.virustotal.com/vtapi/v2/file/scan
+  - curl.exe --cacert C:\temp\cacert.pem --verbose --form file=@%APPVEYOR_BUILD_FOLDER%\out\HackTestFontInstaller.exe --form apikey=%VIRUS_TOTAL_API_KEY% https://www.virustotal.com/vtapi/v2/file/scan
   
   
 artifacts:
