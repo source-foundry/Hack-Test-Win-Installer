@@ -85,8 +85,10 @@ build_script:
   - iscc.exe /DEXTERNAL_VERSION=%APPVEYOR_BUILD_VERSION% %APPVEYOR_BUILD_FOLDER%\src\HackTestWindowsInstaller.iss
   # Upload the exe to VirusTotal with CURL
   - curl.exe --cacert C:\temp\cacert.pem --verbose --form file=@%APPVEYOR_BUILD_FOLDER%\out\HackTestFontInstaller.exe --form apikey=%VIRUS_TOTAL_API_KEY% https://www.virustotal.com/vtapi/v2/file/scan
-  - ps: Set-AppveyorBuildVariable 'SetupExeHash' ( (Get-FileHash -Path "$env:APPVEYOR_BUILD_FOLDER\out\HackTestFontInstaller.exe" -Algorithm SHA256).Hash.ToLower() )
-  - cmd: echo File has is %SetupExeHash%
+  - ps: Set-AppveyorBuildVariable 'SetupExeHash128' ( (Get-FileHash -Path "$env:APPVEYOR_BUILD_FOLDER\out\HackTestFontInstaller.exe" -Algorithm SHA1).Hash.ToLower() )
+  - ps: Set-AppveyorBuildVariable 'SetupExeHash256' ( (Get-FileHash -Path "$env:APPVEYOR_BUILD_FOLDER\out\HackTestFontInstaller.exe" -Algorithm SHA256).Hash.ToLower() )
+  - cmd: echo File SHA128 hash: %SetupExeHash128%
+  - cmd: echo File SHA256 hash: %SetupExeHash256%
   
   
 artifacts:
@@ -102,7 +104,7 @@ deploy:
   prerelease: true
   tag: v$(appveyor_build_version)
   release: Version $(appveyor_build_version)
-  description: $(APPVEYOR_REPO_COMMIT_MESSAGE) \n[VirusTotal Report](https://www.virustotal.com/#/file/$(SetupExeHash)/detection)
+  description: $(APPVEYOR_REPO_COMMIT_MESSAGE) \n\n```\n   SHA-1: $(SetupExeHash128)\n SHA-256: $(SetupExeHash256)\n```\n([VirusTotal Report](https://www.virustotal.com/#/file/$(SetupExeHash)/detection)
   #Build on $(APPVEYOR_REPO_COMMIT_TIMESTAMP):\n 
 
   
