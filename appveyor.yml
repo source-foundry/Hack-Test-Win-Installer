@@ -52,9 +52,8 @@ install:
   # this CACert.pem file and then instruct CURL to use it.
   #
   # I hope this is proper way to ensure that our https connections are really secure  
-  
-  - md C:\temp      
-	
+
+  - md C:\temp      	
   # Download CA pem file using PowerShell
   - ps: (new-object net.webclient).DownloadFile('https://curl.haxx.se/ca/cacert.pem', 'c:\temp\cacert.pem')  
   # Install CURL using Chocolatey (https://chocolatey.org/packages/curl)
