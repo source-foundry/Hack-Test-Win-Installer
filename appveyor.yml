@@ -36,13 +36,14 @@ install:
   - copy "%APPVEYOR_BUILD_FOLDER%\fonts\Hack-Regular.ttf" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Regular.ttf"
     
   # The script requires fonttools
-  - "%PYTHON_PATH%"\pip install fonttools
+  - %PYTHON_PATH%
+  - %PYTHON_PATH%\pip install fonttools
   
   # Use fontname.py to rename the font family to "Hack Test"
-  - "%PYTHON_PATH%"\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Bold.ttf" 
-  - "%PYTHON_PATH%"\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-BoldItalic.ttf" 
-  - "%PYTHON_PATH%"\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Italic.ttf"
-  - "%PYTHON_PATH%"\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Regular.ttf"
+  - %PYTHON_PATH%\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Bold.ttf" 
+  - %PYTHON_PATH%\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-BoldItalic.ttf" 
+  - %PYTHON_PATH%\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Italic.ttf"
+  - %PYTHON_PATH%\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Regular.ttf"
     
   
   # We  use CURL from Chocolatey for some actions. However, curl.exe does not trust 
