@@ -1,5 +1,9 @@
 # Appveyor build script
 # List of installed tools/SDKs etc.: https://www.appveyor.com/docs/installed-software
+# Add-AppveyorMessage "This is a test message"
+#  - appveyor AddMessage "Test message 123"
+# Set-AppveyorBuildVariable 'MyVar1' 'This is a test message'
+#  - appveyor SetVariable -Name <string> -Value <string>
 
 version: 1.2.{build}
 
@@ -36,11 +40,7 @@ install:
   - copy "%APPVEYOR_BUILD_FOLDER%\fonts\Hack-Regular.ttf" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Regular.ttf"
     
   # The script requires fonttools
-  - C:\Python36-x64\scripts\pip install fonttools
-  #Add-AppveyorMessage "This is a test message"
-  # - appveyor AddMessage "Test message 123"
-  # Set-AppveyorBuildVariable 'MyVar1' 'This is a test message'
-  # appveyor SetVariable -Name <string> -Value <string>
+  - cmd: %PYTHON_PATH%\scripts\pip install fonttools
   
   # Use fontname.py to rename the font family to "Hack Test"
   - C:\Python36-x64\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Bold.ttf" 
