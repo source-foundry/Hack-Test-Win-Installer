@@ -43,10 +43,10 @@ install:
   - C:\Python36-x64\scripts\pip install fonttools
   
   # Use fontname.py to rename the font family to "Hack Test"
-  - C:\Python36-x64\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Bold.ttf" 
-  - C:\Python36-x64\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-BoldItalic.ttf" 
-  - C:\Python36-x64\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Italic.ttf"
-  - C:\Python36-x64\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "HackTest" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Regular.ttf"
+  - C:\Python36-x64\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "Hack Test" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Bold.ttf" 
+  - C:\Python36-x64\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "Hack Test" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-BoldItalic.ttf" 
+  - C:\Python36-x64\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "Hack Test" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Italic.ttf"
+  - C:\Python36-x64\python "%APPVEYOR_BUILD_FOLDER%\scripts\fontname.py" "Hack Test" "%APPVEYOR_BUILD_FOLDER%\testfonts\Hack-Test-Regular.ttf"
     
   
   # We  use CURL from Chocolatey for some actions. However, curl.exe does not trust 
@@ -85,7 +85,7 @@ build_script:
   - iscc.exe /DEXTERNAL_VERSION=%APPVEYOR_BUILD_VERSION% %APPVEYOR_BUILD_FOLDER%\src\HackTestWindowsInstaller.iss
   # Upload the exe to VirusTotal with CURL
   - curl.exe --cacert C:\temp\cacert.pem --verbose --form file=@%APPVEYOR_BUILD_FOLDER%\out\HackTestFontInstaller.exe --form apikey=%VIRUS_TOTAL_API_KEY% https://www.virustotal.com/vtapi/v2/file/scan
-  - ps: Set-AppveyorBuildVariable 'SetupExeHash' ( (Get-FileHash -Path %APPVEYOR_BUILD_FOLDER%\out\HackTestFontInstaller.exe -Algorithm SHA1).Hash.ToLower() )
+  - ps: Set-AppveyorBuildVariable 'SetupExeHash' ( (Get-FileHash -Path "$env:APPVEYOR_BUILD_FOLDER\out\HackTestFontInstaller.exe" -Algorithm SHA1).Hash.ToLower() )
   - cmd: echo %SetupExeHash%
   
   
